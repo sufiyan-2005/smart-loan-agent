@@ -1,0 +1,98 @@
+version: "1.0.0"
+name: "smart-loan-approval-env"
+description: "An AI agent that evaluates loan applications and matches them with bank offers based on credit score, ROI, and risk."
+
+# Agent kya kya dekhega (Observation)
+observation_space:
+  type: "dict"
+  fields:
+    income: "float"
+    credit_score: "int"
+    loan_amount: "float"
+    age: "int"
+    is_fraud: "boolean"
+    available_offers: 
+      type: "list"
+      description: "List of eligible bank offers based on credit score"
+
+# Agent kya action lega (Action)
+action_space:
+  type: "dict"
+  description: "Agent's decision and the logical reasoning behind it."
+  fields:
+    decision:
+      type: "discrete"
+      mapping: {0: "Reject", 1: "Approve"}
+    justification:
+      type: "string"
+      description: "AI's reason for approval or rejection."
+
+# Difficulty Levels
+levels:
+  easy:
+    description: "Decision based only on credit score"
+  medium:
+    description: "Decision based on credit score + Income-to-Loan ratio"
+  hard:
+    description: "Includes Fraud Detection and Risk Analysis"
+
+
+
+
+
+
+# # OpenEnv Specification for AI Smart Loan Approval
+# version: "1.0.0"
+# name: "smart-loan-approval-env"
+# description: "An AI agent that evaluates loan applications and matches them with bank offers based on credit score, ROI, and risk."
+
+# # Define what the agent can see (Observation Space)
+# observation_space:
+#   type: "dict"
+#   fields:
+#     income: 
+#       type: "float"
+#       description: "Annual income of the applicant"
+#     credit_score: 
+#       type: "int"
+#       description: "Credit rating (300-850)"
+#     loan_amount: 
+#       type: "float"
+#       description: "Amount requested by the applicant"
+#     age: 
+#       type: "int"
+#       description: "Age of the applicant"
+#     available_offers:
+#       type: "list"
+#       item_type: "object"
+#       fields:
+#         bank_name: "string"
+#         max_amount: "float"
+#         roi: "float"
+#       description: "List of eligible bank offers based on credit score"
+
+# # Define what the agent can do (Action Space)
+# action_space:
+#   type: "discrete"
+#   description: "Decision to approve or reject the loan"
+#   mapping:
+#     0: "Reject"
+#     1: "Approve"
+
+# # Difficulty Configurations
+# levels:
+#   easy:
+#     description: "Decision based only on credit score (>650)"
+#     reward_range: [-1.0, 1.0]
+#   medium:
+#     description: "Decision based on credit score + Income-to-Loan ratio"
+#     reward_range: [-1.0, 1.0]
+#   hard:
+#     description: "Includes Fraud Detection and Risk Analysis"
+#     reward_range: [-2.0, 2.0]
+
+# # Metadata for Hackathon Judges
+# metadata:
+#   category: "FinTech / Automation"
+#   tags: ["banking", "risk-assessment", "real-world-task"]
+#   framework: "OpenEnv v1"
