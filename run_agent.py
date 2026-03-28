@@ -70,3 +70,9 @@ print(f"Action: {'Approve' if decision == 1 else 'Reject'}")
 print(f"Justification: {action.justification}")
 print(f"Reward Received: {reward}")
 
+import time
+
+
+print(" Agent task completed. Keeping server alive for submission...")
+while True:
+    time.sleep(60) 
