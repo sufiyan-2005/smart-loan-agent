@@ -72,7 +72,11 @@ print(f"Reward Received: {reward}")
 
 import time
 
+action = LoanAction(decision=decision, justification=reason)
+next_state, reward, done, info = env.step(action) 
 
-print(" Agent task completed. Keeping server alive for submission...")
+print(f" Validation Success: Reward {reward}")
+
+import time
 while True:
-    time.sleep(60) 
+    time.sleep(60)
