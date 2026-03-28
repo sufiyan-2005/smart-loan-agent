@@ -5,7 +5,7 @@ import http.server
 import socketserver
 import json
 
-# Background Server function
+# --- YE RAHA WO CODE ---
 def run_keep_alive_server():
     class OpenEnvAPIHandler(http.server.SimpleHTTPRequestHandler):
         def do_POST(self):
@@ -23,12 +23,14 @@ def run_keep_alive_server():
 
     PORT = 7860
     socketserver.TCPServer.allow_reuse_address = True
+    # 👇 YE WALI LINE HAI WO (0.0.0.0 ke saath)
     with socketserver.TCPServer(("0.0.0.0", PORT), OpenEnvAPIHandler) as httpd:
         print(f"🚀 Background Server started on port {PORT}")
         httpd.serve_forever()
 
-# Server ko turant background mein start kar do
+
 threading.Thread(target=run_keep_alive_server, daemon=True).start()
+# -----------------------
 
 
 env = LoanApprovalEnv(difficulty="medium")
