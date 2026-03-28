@@ -71,7 +71,7 @@ print(f"Justification: {action.justification}")
 print(f"Reward Received: {reward}")
 
 action = LoanAction(decision=decision, justification=reason)
-next_state, reward, done, info = env.step(action) 
+next_state, reward, done = env.step(action) 
 
 print(f" Validation Success: Reward {reward}")
 
