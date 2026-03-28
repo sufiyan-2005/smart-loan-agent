@@ -70,8 +70,6 @@ print(f"Action: {'Approve' if decision == 1 else 'Reject'}")
 print(f"Justification: {action.justification}")
 print(f"Reward Received: {reward}")
 
-import time
-
 action = LoanAction(decision=decision, justification=reason)
 next_state, reward, done, info = env.step(action) 
 
