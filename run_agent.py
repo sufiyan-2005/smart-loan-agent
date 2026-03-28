@@ -38,7 +38,16 @@ print(f"Action: {'Approve' if decision == 1 else 'Reject'}")
 print(f"Justification: {action.justification}")
 print(f"Reward Received: {reward}")
 
+# --- HUGGING FACE KEEP-ALIVE SERVER ---
+import http.server
+import socketserver
 
+PORT = 7860
+Handler = http.server.SimpleHTTPRequestHandler
+
+print(f"AI Agent Inference Complete! Starting keep-alive server on port {PORT}...")
+with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    httpd.serve_forever()
 
 
 # from env import LoanApprovalEnv
