@@ -1,5 +1,35 @@
 from env import LoanApprovalEnv
 from models import LoanAction
+import threading
+import http.server
+import socketserver
+import json
+
+# Background Server function
+def run_keep_alive_server():
+    class OpenEnvAPIHandler(http.server.SimpleHTTPRequestHandler):
+        def do_POST(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            dummy_data = {"observation": "Reset OK", "reward": 0.0, "done": False, "info": {}}
+            self.wfile.write(json.dumps(dummy_data).encode('utf-8'))
+
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "Running"}).encode('utf-8'))
+
+    PORT = 7860
+    socketserver.TCPServer.allow_reuse_address = True
+    with socketserver.TCPServer(("0.0.0.0", PORT), OpenEnvAPIHandler) as httpd:
+        print(f"🚀 Background Server started on port {PORT}")
+        httpd.serve_forever()
+
+# Server ko turant background mein start kar do
+threading.Thread(target=run_keep_alive_server, daemon=True).start()
+
 
 env = LoanApprovalEnv(difficulty="medium")
 state = env.reset()
@@ -38,37 +68,3 @@ print(f"Action: {'Approve' if decision == 1 else 'Reject'}")
 print(f"Justification: {action.justification}")
 print(f"Reward Received: {reward}")
 
-# --- HUGGING FACE OPENENV API SERVER ---
-import http.server
-import socketserver
-import json
-
-class OpenEnvAPIHandler(http.server.SimpleHTTPRequestHandler):
-
-    
-    def do_POST(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-       
-        # To understand the format of RL dummy to send data to pass 
-        dummy_data = {
-            "observation": "Environment Reset Successful", 
-            "reward": 0.0, 
-            "done": False, 
-            "info": {}
-        }
-        self.wfile.write(json.dumps(dummy_data).encode('utf-8'))
-
-    # Normal browser GET requests
-    def do_GET(self):
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps({"status": "AI Agent Running Perfect!"}).encode('utf-8'))
-
-PORT = 7860
-print(f"AI Agent Ready! Starting OpenEnv API server on port {PORT}...")
-socketserver.TCPServer.allow_reuse_address = True # Port error se bachne ke liye
-with socketserver.TCPServer(("", PORT), OpenEnvAPIHandler) as httpd:
-    httpd.serve_forever()
