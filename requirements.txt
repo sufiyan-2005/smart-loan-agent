@@ -1,3 +1,7 @@
 google-generativeai
 pydantic
 PyYAML
+openenv
+gradio
+uvicorn
+fastapi
