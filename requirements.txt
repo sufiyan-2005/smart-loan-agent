@@ -3,5 +3,3 @@ pydantic
 PyYAML
 openenv
 gradio
-uvicorn
-fastapi
