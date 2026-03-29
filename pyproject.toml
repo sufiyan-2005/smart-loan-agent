@@ -1,0 +1,8 @@
+[project]
+name = "loan-agent"
+version = "0.1.0"
+dependencies = [
+    "google-generativeai",
+    "pydantic",
+    "PyYAML"
+]
