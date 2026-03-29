@@ -11,4 +11,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY --chown=user . /app
 
-CMD ["python", "inference.py"]
+CMD ["python", "inference.py" , "--port" , "7860"]
